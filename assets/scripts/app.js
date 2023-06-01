@@ -1,11 +1,14 @@
 class Product {
-    title = 'DEFAULT';
-    imageUrl;
-    description;
-    price;
+    // title = 'DEFAULT';
+    // imageUrl;
+    // description;
+    // price;
 
-    someMethod() {
-
+    constructor(title, image, desc, price) {
+        this.title = title;
+        this.imageUrl = image;
+        this.description = desc;
+        this.price = price;
     }
 }
 
@@ -15,9 +18,12 @@ console.log(new Product());
 const productList = {
     products: [
 
-        new Product() {
-
-        }
+        new Product(
+            'A Pillow',
+            'https://cdn.sleepnumber.com/image/upload/f_auto,q_auto:eco/v1666283228/workarea/catalog/product_images/pillow-pcp/Pillow-PCP_PDP_Postcard_Variant_classic',
+            'A soft pilllow',
+            129.99
+            ),
         { title: 'A Pillow',
             imageUrl: 'https://cdn.sleepnumber.com/image/upload/f_auto,q_auto:eco/v1666283228/workarea/catalog/product_images/pillow-pcp/Pillow-PCP_PDP_Postcard_Variant_classic',
             price: 19.99,
