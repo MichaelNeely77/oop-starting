@@ -20,9 +20,11 @@ class ElementAttribute {
 }
 
 class Component {
-    constructor(renderHookId) {
+    constructor(renderHookId, shouldRender = true) {
         this.hookId = renderHookId;
-        this.render();
+        if(shouldRender) {
+            this.render();
+        }
     }
 
     render() {}
@@ -78,8 +80,9 @@ class ShoppingCart extends Component {
 
 class ProductItem extends Component {
     constructor(product, renderHookId) {
-        super(renderHookId);
+        super(renderHookId, false);
     this.product = product;
+    this.render();
     }
 
     addToCart() {
@@ -105,29 +108,44 @@ class ProductItem extends Component {
 }
 
 class ProductList extends Component {
-    products = [
-        new Product(
-            'A Pillow',
-            'https://cdn.sleepnumber.com/image/upload/f_auto,q_auto:eco/v1666283228/workarea/catalog/product_images/pillow-pcp/Pillow-PCP_PDP_Postcard_Variant_classic',
-            'A soft pillow',
-            129.99
-        ),
-        new Product(
-            'A carpet',
-            'https://secure.img1-fg.wfcdn.com/im/09651980/resize-h445%5Ecompr-r85/1922/192265957/Nisar+Performance+Beige%2FYellow+Machine+Washable+Rug.jpg',
-            'A soft carpet',
-            179.99
-        )
-    ];
+    products = [];
+
     constructor(renderHookId) {
         super(renderHookId);
+        this.fetchProducts();
     }
-    render() {
+    fetchProducts() {
+        this.products = [
 
-        this.createRootElement('ul', 'product-list', [new ElementAttribute('id', 'prod-list')]);
+            new Product(
+                'A Pillow',
+                'https://cdn.sleepnumber.com/image/upload/f_auto,q_auto:eco/v1666283228/workarea/catalog/product_images/pillow-pcp/Pillow-PCP_PDP_Postcard_Variant_classic',
+                'A soft pillow',
+                129.99
+            ),
+            new Product(
+                'A carpet',
+                'https://secure.img1-fg.wfcdn.com/im/09651980/resize-h445%5Ecompr-r85/1922/192265957/Nisar+Performance+Beige%2FYellow+Machine+Washable+Rug.jpg',
+                'A soft carpet',
+                179.99
+            )
+        ];
+        this.renderProducts();
+    }
+
+    renderProducts() {
         for (const prod of this.products) {
             new ProductItem(prod, 'prod-list');
         }
+    }
+
+    render() {
+
+        this.createRootElement('ul', 'product-list', [new ElementAttribute('id', 'prod-list')]);
+        if (this.products && this.products.length > 0) {
+            this.renderProducts();
+        }
+
     }
 }
 
